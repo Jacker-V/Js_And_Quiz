@@ -38,6 +38,12 @@ h2 {
     background-color: rgb(101, 238, 248)
 }
 
+.choice.correct-highlight {
+  transform: scale(1.5);
+  transition: transform 0.3s ease;
+  background-color: #fe1a7d; /* tùy chọn: thêm nền xanh lá */
+}
+
 .btn {
     margin-top: 20px;
     padding: 10px 20px;

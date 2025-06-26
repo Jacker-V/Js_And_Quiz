@@ -36,16 +36,18 @@ function getRandomQuestion(questions) {
     return questions[Math.floor(Math.random() * questions.length)];
 }
 
-function getRandomComputerChoice(choices) {
-    return choices[Math.floor(Math.random() * choices.length)];
-}
+// function getRandomComputerChoice(choices) {
+//     return choices[Math.floor(Math.random() * choices.length)];
+// }
 
 function getResults(question, computerChoice) {
     if (computerChoice === question.answer) {
-        return "✅ The computer's choice is correct!";
+        return "✅ 💕💕💕💕Em iu chọn đúng ùi! 💕💕💕💕💕";
     } else {
-        return `❌ The computer's choice is wrong. The correct answer is: ${question.answer}`;
+        return `❌ Sai ùi chọn lại đi e iuuu, nhắc nhỏ cho 😒 đáp án là ${question.answer}`;
     }
+    // console.log(3);
+
 }
 
 let currentQuestion;
@@ -60,23 +62,47 @@ function renderQuestion() {
     currentQuestion.choices.forEach(choice => {
         const div = document.createElement('div');
         div.className = 'choice';
-        div.onclick = play();
+        // div.onclick = play;
         div.textContent = choice;
         choicesDiv.appendChild(div);
-    });
-
+    })
     document.getElementById('result').textContent = '';
+    document.querySelectorAll(".choice").forEach(choiceAnswser => {
+        choiceAnswser.onclick = function () {
+            const selectedAnswer = choiceAnswser.textContent;
+
+            if (selectedAnswer === currentQuestion.answer) {
+                const result = getResults(currentQuestion, selectedAnswer);
+                document.getElementById('result').textContent = result;
+
+                setTimeout(renderQuestion, 2000);
+            } else {
+
+                document.querySelectorAll('.choice').forEach(el => {
+                    if (el.textContent === currentQuestion.answer) {
+                        // Lấy scale hiện tại (nếu có)
+                        const currentScale = parseFloat(el.style.transform.replace(/[^0-9.]/g, '')) || 1;
+                        const newScale = currentScale * 1.5;
+                        el.style.transform = `scale(${newScale})`;
+                    }
+                });
+
+                const result = getResults(currentQuestion, selectedAnswer);
+                document.getElementById('result').textContent = result;
+
+            }
+        }
+    })
 }
 
-function play() {
-    const computerChoice = getRandomComputerChoice(currentQuestion.choices);
-    const result = getResults(currentQuestion, computerChoice);
-    document.getElementById('result').textContent = `Người thương chọn: "${computerChoice}"\n${result}`;
-    setTimeout(renderQuestion, 3000);
-    console.log(2);
-    
-    
-}
+// function play() {
+
+//     // document.getElementById('result').textContent = `Người thương chọn: "${computerChoice}"\n${result}`;
+
+//     console.log(2);
+
+
+// }
 
 // Khởi động lần đầu
 renderQuestion();
